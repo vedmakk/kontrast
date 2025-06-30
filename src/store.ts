@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { themeReducer } from './theme/themeSlice'
+import { colorsReducer } from './colors/colorsSlice'
 
 export const createStore = () =>
   configureStore({
     reducer: {
       theme: themeReducer,
+      colors: colorsReducer,
     },
   })
 

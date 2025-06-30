@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
+import { ColorManager } from '../../colors/containers/ColorManager'
+
 const AppContainer = styled.div({
   display: 'flex',
   justifyContent: 'center',
@@ -29,6 +31,7 @@ export const App: React.FC = () => (
     <LayoutContainer>
       <main>
         <h1>Hello World</h1>
+        <ColorManager />
       </main>
     </LayoutContainer>
   </AppContainer>
