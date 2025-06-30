@@ -96,80 +96,81 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
     return ratio >= 4.5 ? 'white' : 'black'
   }
 
-  if (validColors.length < 2) {
-    return <p>Please add at least 2 colors to the grid.</p>
-  }
-
   return (
     <Container>
       <Label size="normal" as="h2">
-        Color Grid
+        Color Contrast Grid
       </Label>
-      <GridTable>
-        <thead>
-          <tr>
-            <HeaderCell color="transparent" textColor="transparent" />
-            {validColors.map((c) => (
-              <HeaderCell
-                key={c.id}
-                color={c.color}
-                textColor={getContrastColor(c.color)}
-              >
-                {c.color.toUpperCase()}
-              </HeaderCell>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {validColors.map((row) => (
-            <tr key={row.id}>
-              <HeaderCell
-                color={row.color}
-                textColor={getContrastColor(row.color)}
-              >
-                {row.color.toUpperCase()}
-              </HeaderCell>
-              {validColors.map((col) => {
-                if (row.id === col.id) {
-                  return <Cell key={col.id} />
-                }
-                const ratio = ratioFor(row.color, col.color)
-                const pass = isPass(ratio)
-
-                const bothSameType = row.type === col.type
-                const cellStyle = bothSameType
-                  ? { background: diagonalGradient(row.color, col.color) }
-                  : {
-                      background:
-                        row.type === 'background' ? row.color : col.color,
-                      color: row.type === 'background' ? col.color : row.color,
-                    }
-
-                return (
-                  <Cell key={col.id} style={cellStyle as React.CSSProperties}>
-                    {!bothSameType && (
-                      <span
-                        style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                        }}
-                      >
-                        Text
-                      </span>
-                    )}
-                    <RatioLabel textColor={getContrastColor(row.color)}>
-                      {ratio.toFixed(1)}
-                    </RatioLabel>
-                    <PassFail pass={pass}>{pass ? 'PASS' : 'FAIL'}</PassFail>
-                  </Cell>
-                )
-              })}
+      {validColors.length < 2 ? (
+        <p>Please add at least 2 colors.</p>
+      ) : (
+        <GridTable>
+          <thead>
+            <tr>
+              <HeaderCell color="transparent" textColor="transparent" />
+              {validColors.map((c) => (
+                <HeaderCell
+                  key={c.id}
+                  color={c.color}
+                  textColor={getContrastColor(c.color)}
+                >
+                  {c.color.toUpperCase()}
+                </HeaderCell>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </GridTable>
+          </thead>
+          <tbody>
+            {validColors.map((row) => (
+              <tr key={row.id}>
+                <HeaderCell
+                  color={row.color}
+                  textColor={getContrastColor(row.color)}
+                >
+                  {row.color.toUpperCase()}
+                </HeaderCell>
+                {validColors.map((col) => {
+                  if (row.id === col.id) {
+                    return <Cell key={col.id} />
+                  }
+                  const ratio = ratioFor(row.color, col.color)
+                  const pass = isPass(ratio)
+
+                  const bothSameType = row.type === col.type
+                  const cellStyle = bothSameType
+                    ? { background: diagonalGradient(row.color, col.color) }
+                    : {
+                        background:
+                          row.type === 'background' ? row.color : col.color,
+                        color:
+                          row.type === 'background' ? col.color : row.color,
+                      }
+
+                  return (
+                    <Cell key={col.id} style={cellStyle as React.CSSProperties}>
+                      {!bothSameType && (
+                        <span
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                          }}
+                        >
+                          Text
+                        </span>
+                      )}
+                      <RatioLabel textColor={getContrastColor(row.color)}>
+                        {ratio.toFixed(1)}
+                      </RatioLabel>
+                      <PassFail pass={pass}>{pass ? 'PASS' : 'FAIL'}</PassFail>
+                    </Cell>
+                  )
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </GridTable>
+      )}
     </Container>
   )
 }

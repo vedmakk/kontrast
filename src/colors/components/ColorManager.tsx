@@ -32,14 +32,15 @@ const Row = styled.div(({ theme }) => ({
 }))
 
 const ColorInput = styled.input(
-  {
-    width: '2.5rem',
-    height: '2.5rem',
+  ({ theme }) => ({
+    width: '2.25rem',
+    height: '2.25rem',
     border: 'none',
     padding: 0,
     background: 'none',
     cursor: 'pointer',
-  },
+    borderRadius: theme.spacing(0.5),
+  }),
   focusVisibleStyles,
 )
 
@@ -49,10 +50,17 @@ const HexInput = styled.input(
     fontSize: theme.fontSize.small,
     padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
     border: `1px solid ${theme.colors.link}`,
-    borderRadius: '4px',
+    borderRadius: theme.spacing(0.5),
     width: '6rem',
+    color: theme.colors.text,
+    background: theme.colors.background,
   }),
   focusVisibleStyles,
+  {
+    '&:focus-visible': {
+      outlineOffset: '0px',
+    },
+  },
 )
 
 const Select = styled.select(
@@ -61,7 +69,8 @@ const Select = styled.select(
     fontSize: theme.fontSize.small,
     padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
     border: `1px solid ${theme.colors.link}`,
-    borderRadius: '4px',
+    borderRadius: theme.spacing(0.5),
+    color: theme.colors.text,
     background: theme.colors.background,
   }),
   focusVisibleStyles,

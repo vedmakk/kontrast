@@ -2,6 +2,9 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import { Label } from './Label'
+
+import { ThemeSwitch } from '../../theme/containers/ThemeSwitch'
+
 import { ColorManager } from '../../colors/containers/ColorManager'
 import { ColorGrid } from '../../colors/containers/ColorGrid'
 
@@ -28,7 +31,14 @@ const LayoutContainer = styled.div(({ theme }) => ({
   },
 }))
 
-const ColorContainer = styled.div(({ theme }) => ({
+const Header = styled.header(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: theme.spacing(4),
+}))
+
+const ColorContainer = styled.main(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(8),
@@ -37,15 +47,16 @@ const ColorContainer = styled.div(({ theme }) => ({
 export const App: React.FC = () => (
   <AppContainer>
     <LayoutContainer>
-      <main>
+      <Header>
         <Label size="large" as="h1">
           kontrast
         </Label>
-        <ColorContainer>
-          <ColorManager />
-          <ColorGrid />
-        </ColorContainer>
-      </main>
+        <ThemeSwitch size={28} />
+      </Header>
+      <ColorContainer>
+        <ColorManager />
+        <ColorGrid />
+      </ColorContainer>
     </LayoutContainer>
   </AppContainer>
 )
