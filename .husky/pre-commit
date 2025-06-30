@@ -1,0 +1,2 @@
+bunx --bun lint-staged
+bun run typecheck

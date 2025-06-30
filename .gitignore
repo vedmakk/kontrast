@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+*.log
+
+# Firebase
+.firebaserc
+.firebase/
+
+# OS junk
+.DS_Store
