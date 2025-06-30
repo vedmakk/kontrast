@@ -16,7 +16,12 @@ const newColor = (): Color => ({
 
 const colorsSlice = createSlice({
   name: 'colors',
-  initialState: [] as Color[],
+  initialState: [
+    { id: crypto.randomUUID(), color: '#f8f8f8', type: 'background' },
+    { id: crypto.randomUUID(), color: '#f5f0ff', type: 'background' },
+    { id: crypto.randomUUID(), color: '#000000', type: 'foreground' },
+    { id: crypto.randomUUID(), color: '#7f42ff', type: 'foreground' },
+  ] as Color[],
   reducers: {
     addColor: (state) => {
       state.push(newColor())

@@ -159,7 +159,13 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                           Text
                         </span>
                       )}
-                      <RatioLabel textColor={getContrastColor(row.color)}>
+                      <RatioLabel
+                        textColor={
+                          !bothSameType
+                            ? getContrastColor(cellStyle.background)
+                            : getContrastColor(row.color)
+                        }
+                      >
                         {ratio.toFixed(1)}
                       </RatioLabel>
                       <PassFail pass={pass}>{pass ? 'PASS' : 'FAIL'}</PassFail>
