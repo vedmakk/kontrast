@@ -2,11 +2,11 @@
 
 # kontrast – Universal Contrast Checker
 
-A **minimal**, **multi-context** color contrast tool — built to test a color against light backgrounds, dark backgrounds, and secondary UI elements in real time. Designed to answer a simple, but often neglected question:
+A **minimal**, **multi-context** color contrast tool — built to test a multiple colors against various backgrounds, and secondary UI elements in real time. Designed to answer a simple, but often neglected question:
 
 👉 _“Can this one color work everywhere?”_
 
-Try it live at [kontrast.app](https://kontrast.app) – no sign-up, no clutter.
+Try it live at [kontrast.app](https://kontrast.app) – no sign-up, no clutter. _(coming soon)_
 
 ---
 
@@ -21,9 +21,11 @@ I built **kontrast** because I couldn’t find a single tool that let me:
 - Tweak all of them **live** and get instant WCAG feedback
 - Understand not just ratios — but _relationships_
 
+It is inspired by [Contrast Grid](https://contrast-grid.eightshapes.com) and tools like [ColorKit](https://colorkit.co/contrast-checker) – but combines the real-time feedback of the latter with the grid view of the former, plus it adds foreground-background, background-background and foreground-foreground comparisons which allows you to see how multiple colors work together in different contexts.
+
 ### 🆚 How it's different
 
-- 🧠 Designed for **design systems**, not just developers
+- 🧠 Designed for making colors work in **design systems**, not just ensuring compliance
 - 🎯 Helps find **universal colors** for theming (light/dark)
 - ⚡ Instant WCAG contrast updates (AA/AAA) across all comparisons
 - 🧪 Built for **real-world UI decisions**, not just box-checking
@@ -32,8 +34,8 @@ I built **kontrast** because I couldn’t find a single tool that let me:
 
 ## 🛠️ Features
 
-🎨 **Three-Way Color Comparison**  
-Pick a **primary**, **secondary**, and **background color** — see how all pairs perform.
+🎨 **Multiple Color Comparison**  
+Pick a **primary**, **secondary**, and multiple **background colors** — see how all pairs perform.
 
 🌗 **Dual Theme Support**  
 Test against both **light** and **dark** backgrounds simultaneously.
@@ -45,7 +47,7 @@ Every contrast pair updates instantly with WCAG 2.1 compliance labels.
 Use sliders, hex inputs, or color pickers — changes are reflected immediately.
 
 🔢 **Contrast Ratios**  
-See the exact contrast ratio for each comparison, not just pass/fail.
+See the exact contrast ratio for each comparison.
 
 💡 **Smart Suggestions** _(coming soon)_  
 Get nearby color suggestions that pass contrast while staying visually close.
