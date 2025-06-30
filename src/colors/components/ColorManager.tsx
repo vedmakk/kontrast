@@ -21,6 +21,7 @@ const Container = styled.div(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing(2),
   marginTop: theme.spacing(4),
+  width: '320px',
 }))
 
 const Row = styled.div(({ theme }) => ({
@@ -42,32 +43,26 @@ const ColorInput = styled.input(
   focusVisibleStyles,
 )
 
-const HexInput = styled.input(({ theme }) => ({
-  fontFamily: 'Fira Code, monospace',
-  fontSize: theme.fontSize.small,
-  padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
-  border: `1px solid ${theme.colors.link}`,
-  borderRadius: '4px',
-  width: '6rem',
-}))
-
-const Select = styled.select(({ theme }) => ({
-  fontFamily: 'Fira Code, monospace',
-  fontSize: theme.fontSize.small,
-  padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
-  border: `1px solid ${theme.colors.link}`,
-  borderRadius: '4px',
-  background: theme.colors.background,
-}))
-
-const RemoveButton = styled.button(
+const HexInput = styled.input(
   ({ theme }) => ({
-    background: 'none',
-    border: 'none',
-    color: theme.colors.link,
-    cursor: 'pointer',
+    fontFamily: 'Fira Code, monospace',
     fontSize: theme.fontSize.small,
-    padding: theme.spacing(1),
+    padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
+    border: `1px solid ${theme.colors.link}`,
+    borderRadius: '4px',
+    width: '6rem',
+  }),
+  focusVisibleStyles,
+)
+
+const Select = styled.select(
+  ({ theme }) => ({
+    fontFamily: 'Fira Code, monospace',
+    fontSize: theme.fontSize.small,
+    padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
+    border: `1px solid ${theme.colors.link}`,
+    borderRadius: '4px',
+    background: theme.colors.background,
   }),
   focusVisibleStyles,
 )
@@ -79,7 +74,9 @@ export const ColorManager: React.FC<Props> = ({
   onRemove,
 }) => (
   <Container>
-    <Label size="large">Colors</Label>
+    <Label size="normal" as="h2">
+      Colors
+    </Label>
     {colors.map((c) => (
       <Row key={c.id}>
         <ColorInput
@@ -102,9 +99,7 @@ export const ColorManager: React.FC<Props> = ({
           <option value="background">background</option>
           <option value="foreground">foreground</option>
         </Select>
-        <RemoveButton aria-label="Remove" onClick={() => onRemove(c.id)}>
-          ×
-        </RemoveButton>
+        <Button label="Remove" onClick={() => onRemove(c.id)} />
       </Row>
     ))}
     <Button label="Add Color" onClick={onAdd} />

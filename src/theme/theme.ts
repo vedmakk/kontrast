@@ -73,8 +73,8 @@ export type CustomTheme = BaseTheme & {
     shadow: string
     modal: string
     modalBackdrop: string
-    punctuation: string
-    editorFocus: string
+    contrastPass: string
+    contrastFail: string
   }
   opacity: {
     disabled: number
@@ -129,8 +129,8 @@ export const LIGHT_THEME: CustomTheme = {
     shadow: 'rgba(0, 0, 0, 0.1)',
     modal: '#ffffff',
     modalBackdrop: 'rgba(255, 255, 255, 0.8)',
-    punctuation: '#7f42ff',
-    editorFocus: 'rgba(156, 109, 255, 0.3)',
+    contrastPass: '#21854b',
+    contrastFail: '#d73b43',
   },
   opacity: {
     disabled: 0.5,
@@ -153,8 +153,8 @@ export const DARK_THEME: CustomTheme = {
     shadow: 'rgba(255, 255, 255, 0.05)',
     modal: '#000000',
     modalBackdrop: 'rgba(34, 34, 34, 0.9)',
-    punctuation: '#9c6dff',
-    editorFocus: 'rgba(156, 109, 255, 0.3)',
+    contrastPass: '#21854b',
+    contrastFail: '#d73b43',
   },
   opacity: {
     disabled: 0.5,

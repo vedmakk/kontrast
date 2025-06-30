@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
+import { Label } from './Label'
 import { ColorManager } from '../../colors/containers/ColorManager'
+import { ColorGrid } from '../../colors/containers/ColorGrid'
 
 const AppContainer = styled.div({
   display: 'flex',
@@ -26,12 +28,23 @@ const LayoutContainer = styled.div(({ theme }) => ({
   },
 }))
 
+const ColorContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(8),
+}))
+
 export const App: React.FC = () => (
   <AppContainer>
     <LayoutContainer>
       <main>
-        <h1>Hello World</h1>
-        <ColorManager />
+        <Label size="large" as="h1">
+          kontrast
+        </Label>
+        <ColorContainer>
+          <ColorManager />
+          <ColorGrid />
+        </ColorContainer>
       </main>
     </LayoutContainer>
   </AppContainer>
