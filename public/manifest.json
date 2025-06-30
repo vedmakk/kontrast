@@ -1,0 +1,27 @@
+{
+  "name": "doppelp:nkt",
+  "short_name": "dp:",
+  "description": "A minimalistic Markdown editor.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.ico/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.ico/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
