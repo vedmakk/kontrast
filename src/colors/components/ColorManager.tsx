@@ -87,10 +87,12 @@ export const ColorManager: React.FC<Props> = ({
         />
         <HexInput
           type="text"
+          aria-label="Hex color"
           value={c.color}
           onChange={(e) => onUpdate(c.id, { color: e.target.value })}
         />
         <Select
+          aria-label="Color type"
           value={c.type}
           onChange={(e) =>
             onUpdate(c.id, { type: e.target.value as ColorType })
