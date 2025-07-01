@@ -1,7 +1,7 @@
 {
-  "name": "doppelp:nkt",
-  "short_name": "dp:",
-  "description": "A minimalistic Markdown editor.",
+  "name": "kontrast",
+  "short_name": "kontrast",
+  "description": "A multi-color contrast checker",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
