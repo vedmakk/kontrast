@@ -24,6 +24,7 @@ const Cell = styled.td(({ theme }) => ({
   fontSize: theme.fontSize.normal,
   lineHeight: 1.2,
   padding: 0,
+  transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
 }))
 
 const HeaderCell = styled.th<{ color: string; textColor: string }>(
@@ -37,6 +38,7 @@ const HeaderCell = styled.th<{ color: string; textColor: string }>(
     textAlign: 'center',
     background: color,
     color: textColor,
+    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
   }),
 )
 
@@ -51,6 +53,7 @@ const ContrastRatioLabel = styled.span<{ textColor: string }>(
     fontSize: theme.fontSize.tiny,
     top: theme.spacing(0.5),
     left: theme.spacing(0.5),
+    transition: `color ${theme.animations.transition}`,
   }),
 )
 
@@ -64,6 +67,7 @@ const WCAGLevelLabel = styled.span<{ level: WCAGContrastLevel }>(
     position: 'absolute',
     bottom: theme.spacing(0.5),
     right: theme.spacing(0.5),
+    transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
   }),
 )
 

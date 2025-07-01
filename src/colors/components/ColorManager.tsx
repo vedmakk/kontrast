@@ -7,6 +7,7 @@ import { Color, ColorType } from '../types'
 
 import { Button } from '../../app/components/Button'
 import { InfoLabel } from '../../app/components/InfoLabel'
+import { ColorInput } from './ColorInput'
 
 interface Props {
   readonly colors: readonly Color[]
@@ -32,19 +33,6 @@ const Row = styled.div(({ theme }) => ({
   gap: theme.spacing(1),
 }))
 
-const ColorInput = styled.input(
-  ({ theme }) => ({
-    width: '2.25rem',
-    height: '2.25rem',
-    border: 'none',
-    padding: 0,
-    background: 'none',
-    cursor: 'pointer',
-    borderRadius: theme.spacing(0.5),
-  }),
-  focusVisibleStyles,
-)
-
 const HexInput = styled.input(
   ({ theme }) => ({
     fontFamily: 'Fira Code, monospace',
@@ -55,6 +43,7 @@ const HexInput = styled.input(
     width: '6rem',
     color: theme.colors.text,
     background: theme.colors.background,
+    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
   }),
   focusVisibleStyles,
   {
@@ -73,6 +62,7 @@ const Select = styled.select(
     borderRadius: theme.spacing(0.5),
     color: theme.colors.text,
     background: theme.colors.background,
+    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
   }),
   focusVisibleStyles,
 )
