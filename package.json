@@ -19,12 +19,13 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@reduxjs/toolkit": "^2.8.2",
+    "chroma-js": "^3.1.2",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.1.0",
     "react-compiler-runtime": "^19.1.0-rc.2",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
-    "vite-plugin-checker": "^0.9.3",
-    "chroma-js": "^3.1.2"
+    "vite-plugin-checker": "^0.9.3"
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "^11.12.0",
@@ -37,6 +38,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/bun": "^1.2.15",
     "@types/chroma-js": "^3.1.1",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react-dom": "^19.1.5",
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.33.1",
