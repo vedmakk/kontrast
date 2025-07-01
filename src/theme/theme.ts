@@ -1,3 +1,5 @@
+import { WCAGContrastLevel } from '../colors/types'
+
 const SPACING_UNIT = 8
 const ANIMATION_DURATION_SHORT = 0.1
 const ANIMATION_DURATION_LONG = 0.4
@@ -18,6 +20,20 @@ const breakpoints = {
   lg: '@media screen and (min-width: 1024px)',
   xl: '@media screen and (min-width: 1440px)',
 }
+
+const contrastColorFnFactory =
+  (colors: string[]) => (level: WCAGContrastLevel) => {
+    switch (level) {
+      case WCAGContrastLevel.AAA:
+        return colors[0]
+      case WCAGContrastLevel.AA:
+        return colors[1]
+      case WCAGContrastLevel.AA18:
+        return colors[2]
+      case WCAGContrastLevel.FAIL:
+        return colors[3]
+    }
+  }
 
 interface BaseTheme {
   breakpoints: {
@@ -73,12 +89,11 @@ export type CustomTheme = BaseTheme & {
     shadow: string
     modal: string
     modalBackdrop: string
-    contrastPass: string
-    contrastFail: string
   }
   opacity: {
     disabled: number
   }
+  getWCAGLabelColor: (level: WCAGContrastLevel) => string
 }
 
 const BASE_THEME: BaseTheme = {
@@ -129,12 +144,16 @@ export const LIGHT_THEME: CustomTheme = {
     shadow: 'rgba(0, 0, 0, 0.1)',
     modal: '#ffffff',
     modalBackdrop: 'rgba(255, 255, 255, 0.8)',
-    contrastPass: '#21854b',
-    contrastFail: '#d73b43',
   },
   opacity: {
     disabled: 0.5,
   },
+  getWCAGLabelColor: contrastColorFnFactory([
+    '#008578',
+    '#21854b',
+    '#9e6c00',
+    '#d73b43',
+  ]),
 }
 
 export const DARK_THEME: CustomTheme = {
@@ -153,10 +172,14 @@ export const DARK_THEME: CustomTheme = {
     shadow: 'rgba(255, 255, 255, 0.05)',
     modal: '#000000',
     modalBackdrop: 'rgba(34, 34, 34, 0.9)',
-    contrastPass: '#21854b',
-    contrastFail: '#d73b43',
   },
   opacity: {
     disabled: 0.5,
   },
+  getWCAGLabelColor: contrastColorFnFactory([
+    '#008578',
+    '#21854b',
+    '#9e6c00',
+    '#d73b43',
+  ]),
 }

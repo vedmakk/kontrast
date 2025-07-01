@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
-import chroma from 'chroma-js'
 
-import { Color } from '../types'
+import { Color, WCAGContrastLevel } from '../types'
+
+import { contrastRatioFor, getContrastLevel, getContrastColor } from '../utils'
 
 import { Label } from '../../app/components/Label'
 
@@ -43,7 +44,7 @@ const GridTable = styled.table({
   borderCollapse: 'collapse',
 })
 
-const RatioLabel = styled.span<{ textColor: string }>(
+const ContrastRatioLabel = styled.span<{ textColor: string }>(
   ({ theme, textColor }) => ({
     color: textColor,
     position: 'absolute',
@@ -53,16 +54,18 @@ const RatioLabel = styled.span<{ textColor: string }>(
   }),
 )
 
-const PassFail = styled.span<{ pass: boolean }>(({ theme, pass }) => ({
-  color: theme.colors.text,
-  background: pass ? theme.colors.contrastPass : theme.colors.contrastFail,
-  fontSize: theme.fontSize.tiny,
-  padding: theme.spacing(0.25),
-  borderRadius: theme.spacing(0.5),
-  position: 'absolute',
-  bottom: theme.spacing(0.5),
-  right: theme.spacing(0.5),
-}))
+const WCAGLevelLabel = styled.span<{ level: WCAGContrastLevel }>(
+  ({ theme, level }) => ({
+    color: theme.colors.text,
+    background: theme.getWCAGLabelColor(level),
+    fontSize: theme.fontSize.tiny,
+    padding: theme.spacing(0.25),
+    borderRadius: theme.spacing(0.5),
+    position: 'absolute',
+    bottom: theme.spacing(0.5),
+    right: theme.spacing(0.5),
+  }),
+)
 
 const Container = styled.div(({ theme }) => ({
   display: 'flex',
@@ -71,44 +74,22 @@ const Container = styled.div(({ theme }) => ({
 }))
 
 export const ColorGrid: React.FC<Props> = ({ colors }) => {
-  const validColors = useMemo(() => {
-    return colors.map((c) => ({
-      ...c,
-      color: chroma.valid(c.color) ? c.color : '#000000',
-    }))
-  }, [colors])
-
-  const ratioFor = (c1: string, c2: string) => {
-    try {
-      return chroma.contrast(c1, c2)
-    } catch {
-      return 0
-    }
-  }
-
-  const isPass = (ratio: number) => ratio >= 4.5
-
   const diagonalGradient = (c1: string, c2: string) =>
     `linear-gradient(135deg, ${c1} 50%, ${c2} 50%)`
-
-  const getContrastColor = (color: string) => {
-    const ratio = chroma.contrast(color, 'white')
-    return ratio >= 4.5 ? 'white' : 'black'
-  }
 
   return (
     <Container>
       <Label size="normal" as="h2">
         Color Contrast Grid
       </Label>
-      {validColors.length < 2 ? (
+      {colors.length < 2 ? (
         <p>Please add at least 2 colors.</p>
       ) : (
         <GridTable>
           <thead>
             <tr>
               <HeaderCell color="transparent" textColor="transparent" />
-              {validColors.map((c) => (
+              {colors.map((c) => (
                 <HeaderCell
                   key={c.id}
                   color={c.color}
@@ -120,7 +101,7 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
             </tr>
           </thead>
           <tbody>
-            {validColors.map((row) => (
+            {colors.map((row) => (
               <tr key={row.id}>
                 <HeaderCell
                   color={row.color}
@@ -128,12 +109,12 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                 >
                   {row.color.toUpperCase()}
                 </HeaderCell>
-                {validColors.map((col) => {
+                {colors.map((col) => {
                   if (row.id === col.id) {
                     return <Cell key={col.id} />
                   }
-                  const ratio = ratioFor(row.color, col.color)
-                  const pass = isPass(ratio)
+                  const ratio = contrastRatioFor(row.color, col.color)
+                  const contrastLevel = getContrastLevel(ratio)
 
                   const bothSameType = row.type === col.type
                   const cellStyle = bothSameType
@@ -159,7 +140,7 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                           Text
                         </span>
                       )}
-                      <RatioLabel
+                      <ContrastRatioLabel
                         textColor={
                           !bothSameType
                             ? getContrastColor(cellStyle.background)
@@ -167,8 +148,21 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                         }
                       >
                         {ratio.toFixed(1)}
-                      </RatioLabel>
-                      <PassFail pass={pass}>{pass ? 'PASS' : 'FAIL'}</PassFail>
+                      </ContrastRatioLabel>
+                      <WCAGLevelLabel level={contrastLevel}>
+                        {(() => {
+                          switch (contrastLevel) {
+                            case WCAGContrastLevel.AAA:
+                              return 'AAA'
+                            case WCAGContrastLevel.AA:
+                              return 'AA'
+                            case WCAGContrastLevel.AA18:
+                              return 'AA18'
+                            case WCAGContrastLevel.FAIL:
+                              return 'FAIL'
+                          }
+                        })()}
+                      </WCAGLevelLabel>
                     </Cell>
                   )
                 })}
