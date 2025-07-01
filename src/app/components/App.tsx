@@ -45,6 +45,11 @@ const Sidebar = styled.div(({ theme }) => ({
   },
 }))
 
+const SidebarSection = styled.section({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
 const MobileGridContainer = styled.div(({ theme }) => ({
   [theme.breakpoints.md]: {
     display: 'none',
@@ -69,7 +74,7 @@ export const App: React.FC = () => (
     </Header>
     <ContentContainer>
       <Sidebar>
-        <section>
+        <SidebarSection>
           <InfoLabel size="normal" as="h2">
             About
           </InfoLabel>
@@ -78,12 +83,12 @@ export const App: React.FC = () => (
             multiple backgrounds and UI contexts — not just for WCAG compliance,
             but for practical, system-wide accessibility.
           </Label>
-        </section>
+        </SidebarSection>
         <ColorManager />
         <MobileGridContainer>
           <ColorGrid />
         </MobileGridContainer>
-        <section>
+        <SidebarSection>
           <InfoLabel size="tiny" as="p">
             This project is open source under the MIT License.
           </InfoLabel>
@@ -92,13 +97,18 @@ export const App: React.FC = () => (
             label="GitHub"
             externalLink
           />
-        </section>
-        <section>
+          <Button
+            href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum"
+            label="WCAG 2.2 Contrast"
+            externalLink
+          />
+        </SidebarSection>
+        <SidebarSection>
           <InfoLabel size="tiny">
             © 2025 <br />
             Jan Mittelman
           </InfoLabel>
-        </section>
+        </SidebarSection>
       </Sidebar>
       <GridContainer>
         <ColorGrid />
