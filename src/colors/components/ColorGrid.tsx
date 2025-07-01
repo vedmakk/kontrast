@@ -79,7 +79,7 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
 
   return (
     <Container>
-      <InfoLabel size="normal" as="h2" css={{ margin: 0 }}>
+      <InfoLabel size="normal" as="h2">
         Color Contrast Grid
       </InfoLabel>
       {colors.length < 2 ? (

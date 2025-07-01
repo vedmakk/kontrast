@@ -21,7 +21,7 @@ const Header = styled.header(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(4),
   width: '100%',
-  [theme.breakpoints.sm]: {
+  [theme.breakpoints.md]: {
     width: '400px',
   },
 }))
@@ -40,13 +40,23 @@ const Sidebar = styled.div(({ theme }) => ({
   gap: theme.spacing(4),
   padding: theme.spacing(4),
   width: '100%',
-  [theme.breakpoints.sm]: {
+  [theme.breakpoints.md]: {
     width: '400px',
+  },
+}))
+
+const MobileGridContainer = styled.div(({ theme }) => ({
+  [theme.breakpoints.md]: {
+    display: 'none',
   },
 }))
 
 const GridContainer = styled.div(({ theme }) => ({
   padding: theme.spacing(4),
+  display: 'none',
+  [theme.breakpoints.md]: {
+    display: 'block',
+  },
 }))
 
 export const App: React.FC = () => (
@@ -60,17 +70,19 @@ export const App: React.FC = () => (
     <ContentContainer>
       <Sidebar>
         <section>
-          <InfoLabel size="normal" as="h2" css={{ margin: 0 }}>
+          <InfoLabel size="normal" as="h2">
             About
           </InfoLabel>
-          <Label size="normal" as="p">
+          <Label size="normal" as="p" css={{ margin: 0 }}>
             A multi-color contrast checker that lets you test colors across
             multiple backgrounds and UI contexts — not just for WCAG compliance,
             but for practical, system-wide accessibility.
           </Label>
         </section>
         <ColorManager />
-
+        <MobileGridContainer>
+          <ColorGrid />
+        </MobileGridContainer>
         <section>
           <InfoLabel size="tiny" as="p">
             This project is open source under the MIT License.

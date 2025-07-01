@@ -22,6 +22,7 @@ const Container = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(2),
+  width: 'fit-content',
 }))
 
 const Row = styled.div(({ theme }) => ({
@@ -83,7 +84,7 @@ export const ColorManager: React.FC<Props> = ({
   onRemove,
 }) => (
   <Container>
-    <InfoLabel size="normal" as="h2" css={{ margin: 0 }}>
+    <InfoLabel size="normal" as="h2">
       Colors
     </InfoLabel>
     {colors.map((c) => (
