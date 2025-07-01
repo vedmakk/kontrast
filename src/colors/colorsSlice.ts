@@ -2,7 +2,7 @@ import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 
 import { Color, ColorType } from './types'
 
-const DEFAULT_COLOR = '#000000'
+const DEFAULT_COLOR = '#ffffff'
 const DEFAULT_TYPE: ColorType = 'background'
 
 const newColor = (): Color => ({
