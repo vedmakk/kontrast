@@ -114,12 +114,17 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
           <GridTable>
             <thead>
               <tr>
-                <HeaderCell color="transparent" textColor="transparent" />
+                <HeaderCell
+                  color="transparent"
+                  textColor="transparent"
+                  scope="col"
+                />
                 {colors.map((c) => (
                   <HeaderCell
                     key={c.id}
                     color={c.color}
                     textColor={getContrastColor(c.color)}
+                    scope="col"
                   >
                     {c.color.toUpperCase()}
                   </HeaderCell>
@@ -132,6 +137,7 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                   <HeaderCell
                     color={row.color}
                     textColor={getContrastColor(row.color)}
+                    scope="row"
                   >
                     {row.color.toUpperCase()}
                   </HeaderCell>

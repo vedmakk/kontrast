@@ -33,7 +33,7 @@ export const interactiveStyles = ({ theme }: { theme: Theme }) =>
       opacity: theme.opacity.disabled,
       cursor: 'not-allowed',
     },
-    '&:not(:disabled) #label:hover': {
+    '&:not(:disabled) .button__label:hover': {
       transition: `text-decoration-color ${theme.animations.interaction}, color ${theme.animations.interaction}`,
       color: theme.colors.primary,
       textDecorationColor: theme.colors.primary,
@@ -107,7 +107,7 @@ export const Button: React.FC<Props> = ({
   return (
     <Appear>
       <StyledInteractive {...interactiveProps}>
-        <StyledLabel id="label" active={active}>
+        <StyledLabel className="button__label" active={active}>
           {label}
         </StyledLabel>
       </StyledInteractive>
