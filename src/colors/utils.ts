@@ -1,8 +1,8 @@
+import { nanoid } from '@reduxjs/toolkit'
 import chroma from 'chroma-js'
 
 import { WCAGContrastLevel } from './types'
 import { Color, ColorType } from './types'
-import { nanoid } from '@reduxjs/toolkit'
 
 export const contrastRatioFor = (c1: string, c2: string) =>
   chroma.contrast(c1, c2)
@@ -67,10 +67,7 @@ export const parseColorsFromParam = (
       continue
 
     colors.push({
-      id:
-        typeof crypto !== 'undefined' && crypto.randomUUID
-          ? crypto.randomUUID()
-          : nanoid(),
+      id: nanoid(),
       color: `#${hex}`,
       type: CODE_TO_TYPE[code],
     })

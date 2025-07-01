@@ -44,7 +44,7 @@ export const useSyncColorsToUrl = () => {
     debouncedUpdate(colors)
 
     return () => {
-      debouncedUpdate.flush()
+      debouncedUpdate.cancel()
     }
   }, [colors, debouncedUpdate])
 }

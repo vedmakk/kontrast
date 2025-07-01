@@ -24,7 +24,7 @@ const Cell = styled.td(({ theme }) => ({
   fontSize: theme.fontSize.normal,
   lineHeight: 1.2,
   padding: 0,
-  transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
+  transition: `border ${theme.animations.transition}`,
 }))
 
 const HeaderCell = styled.th<{ color: string; textColor: string }>(
@@ -38,7 +38,7 @@ const HeaderCell = styled.th<{ color: string; textColor: string }>(
     textAlign: 'center',
     background: color,
     color: textColor,
-    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
+    transition: `border ${theme.animations.transition}`,
   }),
 )
 

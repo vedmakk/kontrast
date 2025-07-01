@@ -6,22 +6,21 @@ const DEFAULT_COLOR = '#000000'
 const DEFAULT_TYPE: ColorType = 'background'
 
 const newColor = (): Color => ({
-  id:
-    typeof crypto !== 'undefined' && crypto.randomUUID
-      ? crypto.randomUUID()
-      : nanoid(),
+  id: nanoid(),
   color: DEFAULT_COLOR,
   type: DEFAULT_TYPE,
 })
 
+const initialState: Color[] = [
+  { id: nanoid(), color: '#f8f8f8', type: 'background' },
+  { id: nanoid(), color: '#f5f0ff', type: 'background' },
+  { id: nanoid(), color: '#000000', type: 'foreground' },
+  { id: nanoid(), color: '#7f42ff', type: 'foreground' },
+]
+
 const colorsSlice = createSlice({
   name: 'colors',
-  initialState: [
-    { id: crypto.randomUUID(), color: '#f8f8f8', type: 'background' },
-    { id: crypto.randomUUID(), color: '#f5f0ff', type: 'background' },
-    { id: crypto.randomUUID(), color: '#000000', type: 'foreground' },
-    { id: crypto.randomUUID(), color: '#7f42ff', type: 'foreground' },
-  ] as Color[],
+  initialState,
   reducers: {
     addColor: (state) => {
       state.push(newColor())
