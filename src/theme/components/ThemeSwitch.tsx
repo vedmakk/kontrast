@@ -84,6 +84,11 @@ export const ThemeSwitch = ({ selectedTheme, onToggleTheme, size }: Props) => {
 
   return (
     <StyledButtonContainer onClick={onToggleTheme}>
+      <Appear key={selectedTheme}>
+        <InteractiveLabel
+          label={selectedTheme === 'light' ? 'Light' : 'Dark'}
+        />
+      </Appear>
       <IconButtonWrapper size={size}>
         <Orbit data-testid="theme-switch" sunPosition={sunPosition}>
           <Sun>
@@ -130,11 +135,6 @@ export const ThemeSwitch = ({ selectedTheme, onToggleTheme, size }: Props) => {
           </Moon>
         </Orbit>
       </IconButtonWrapper>
-      <Appear key={selectedTheme}>
-        <InteractiveLabel
-          label={selectedTheme === 'light' ? 'Light' : 'Dark'}
-        />
-      </Appear>
     </StyledButtonContainer>
   )
 }

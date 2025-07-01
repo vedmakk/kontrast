@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import { Color, ColorType } from '../types'
-import { Button } from '../../app/components/Button'
-import { Label } from '../../app/components/Label'
 import { focusVisibleStyles } from '../../shared/styles'
+
+import { Color, ColorType } from '../types'
+
+import { Button } from '../../app/components/Button'
+import { InfoLabel } from '../../app/components/InfoLabel'
 
 interface Props {
   readonly colors: readonly Color[]
@@ -20,8 +22,6 @@ const Container = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(2),
-  marginTop: theme.spacing(4),
-  width: '320px',
 }))
 
 const Row = styled.div(({ theme }) => ({
@@ -83,9 +83,9 @@ export const ColorManager: React.FC<Props> = ({
   onRemove,
 }) => (
   <Container>
-    <Label size="normal" as="h2">
+    <InfoLabel size="normal" as="h2" css={{ margin: 0 }}>
       Colors
-    </Label>
+    </InfoLabel>
     {colors.map((c) => (
       <Row key={c.id}>
         <ColorInput

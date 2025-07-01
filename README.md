@@ -1,6 +1,6 @@
 ![kontrast – Screenshot](./assets/screenshot.png)
 
-# kontrast – Universal Contrast Checker
+# kontrast – Multi-Color Contrast Checker
 
 A **minimal**, **multi-context** color contrast tool — built to test a multiple colors against various backgrounds, and secondary UI elements in real time. Designed to answer a simple, but often neglected question:
 

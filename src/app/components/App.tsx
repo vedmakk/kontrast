@@ -1,62 +1,96 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import { Label } from './Label'
-
 import { ThemeSwitch } from '../../theme/containers/ThemeSwitch'
 
 import { ColorManager } from '../../colors/containers/ColorManager'
 import { ColorGrid } from '../../colors/containers/ColorGrid'
+import { Label } from './Label'
+import { InfoLabel } from './InfoLabel'
+import { Button } from './Button'
 
 const AppContainer = styled.div({
   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-start',
-  minHeight: '100vh',
-  '@media print': {
-    minHeight: 'auto',
-  },
-})
-
-const LayoutContainer = styled.div(({ theme }) => ({
-  margin: 0,
+  flexDirection: 'column',
   width: '100%',
-  position: 'relative',
-  [theme.breakpoints.toolbar]: {
-    width: 'fit-content',
-    margin: `${theme.spacing(4)} auto`,
-  },
-  '@media print': {
-    margin: 0,
-  },
-}))
+})
 
 const Header = styled.header(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: theme.spacing(4),
+  padding: theme.spacing(4),
+  width: '100%',
+  [theme.breakpoints.sm]: {
+    width: '400px',
+  },
 }))
 
-const ColorContainer = styled.main(({ theme }) => ({
+const ContentContainer = styled.main(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.spacing(8),
+  [theme.breakpoints.md]: {
+    flexDirection: 'row',
+  },
+}))
+
+const Sidebar = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(4),
+  padding: theme.spacing(4),
+  width: '100%',
+  [theme.breakpoints.sm]: {
+    width: '400px',
+  },
+}))
+
+const GridContainer = styled.div(({ theme }) => ({
+  padding: theme.spacing(4),
 }))
 
 export const App: React.FC = () => (
   <AppContainer>
-    <LayoutContainer>
-      <Header>
-        <Label size="large" as="h1">
-          kontrast
-        </Label>
-        <ThemeSwitch size={28} />
-      </Header>
-      <ColorContainer>
+    <Header>
+      <Label size="large" as="h1" css={{ margin: 0 }}>
+        kontrast
+      </Label>
+      <ThemeSwitch size={28} />
+    </Header>
+    <ContentContainer>
+      <Sidebar>
+        <section>
+          <InfoLabel size="normal" as="h2" css={{ margin: 0 }}>
+            About
+          </InfoLabel>
+          <Label size="normal" as="p">
+            A multi-color contrast checker that lets you test colors across
+            multiple backgrounds and UI contexts — not just for WCAG compliance,
+            but for practical, system-wide accessibility.
+          </Label>
+        </section>
         <ColorManager />
+
+        <section>
+          <InfoLabel size="tiny" as="p">
+            This project is open source under the MIT License.
+          </InfoLabel>
+          <Button
+            href="https://github.com/vedmakk/kontrast"
+            label="GitHub"
+            externalLink
+          />
+        </section>
+        <section>
+          <InfoLabel size="tiny">
+            © 2025 <br />
+            Jan Mittelman
+          </InfoLabel>
+        </section>
+      </Sidebar>
+      <GridContainer>
         <ColorGrid />
-      </ColorContainer>
-    </LayoutContainer>
+      </GridContainer>
+    </ContentContainer>
   </AppContainer>
 )

@@ -5,7 +5,7 @@ import { Color, WCAGContrastLevel } from '../types'
 
 import { contrastRatioFor, getContrastLevel, getContrastColor } from '../utils'
 
-import { Label } from '../../app/components/Label'
+import { InfoLabel } from '../../app/components/InfoLabel'
 
 interface Props {
   readonly colors: readonly Color[]
@@ -79,9 +79,9 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
 
   return (
     <Container>
-      <Label size="normal" as="h2">
+      <InfoLabel size="normal" as="h2" css={{ margin: 0 }}>
         Color Contrast Grid
-      </Label>
+      </InfoLabel>
       {colors.length < 2 ? (
         <p>Please add at least 2 colors.</p>
       ) : (
