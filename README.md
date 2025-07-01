@@ -6,7 +6,7 @@ A **minimal**, **multi-context** color contrast tool — built to test a multipl
 
 👉 _“Can this one color work everywhere?”_
 
-Try it live at [kontrast.app](https://kontrast.app) – no sign-up, no clutter. _(coming soon)_
+Try it live at [vedmakk.github.io/kontrast](https://vedmakk.github.io/kontrast) – no sign-up, no clutter.
 
 ---
 
