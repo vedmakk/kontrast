@@ -4,8 +4,15 @@ import styled from '@emotion/styled'
 import { Color, WCAGContrastLevel } from '../types'
 
 import { contrastRatioFor, getContrastLevel, getContrastColor } from '../utils'
+import {
+  ColorComfortLabel,
+  colorComfortScore,
+  comfortDescriptions,
+  comfortLabel,
+} from '../color-comfort'
 
 import { InfoLabel } from '../../app/components/InfoLabel'
+import { Label } from '../../app/components/Label'
 
 interface Props {
   readonly colors: readonly Color[]
@@ -51,6 +58,7 @@ const ContrastRatioLabel = styled.span<{ textColor: string }>(
     color: textColor,
     position: 'absolute',
     fontSize: theme.fontSize.tiny,
+    padding: theme.spacing(0.25),
     top: theme.spacing(0.5),
     left: theme.spacing(0.5),
     transition: `color ${theme.animations.transition}`,
@@ -71,6 +79,21 @@ const WCAGLevelLabel = styled.span<{ level: WCAGContrastLevel }>(
   }),
 )
 
+const ComfortLabel = styled.span<{
+  textColor: string
+  backgroundColor: string
+}>(({ theme, textColor, backgroundColor }) => ({
+  color: textColor,
+  background: backgroundColor,
+  fontSize: theme.fontSize.tiny,
+  padding: theme.spacing(0.25),
+  borderRadius: theme.spacing(0.5),
+  position: 'absolute',
+  bottom: theme.spacing(0.5),
+  left: theme.spacing(0.5),
+  transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
+}))
+
 const Container = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -81,6 +104,7 @@ const LegendContainer = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(1),
+  maxWidth: '350px',
 }))
 
 const LegendItem = styled.div(({ theme }) => ({
@@ -145,10 +169,21 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                     if (row.id === col.id) {
                       return <Cell key={col.id} />
                     }
-                    const ratio = contrastRatioFor(row.color, col.color)
-                    const contrastLevel = getContrastLevel(ratio)
 
                     const bothSameType = row.type === col.type
+
+                    const ratio = contrastRatioFor(row.color, col.color)
+                    const contrastLevel = getContrastLevel(ratio)
+                    const comfortScore = colorComfortScore(
+                      row.color,
+                      col.color,
+                      {
+                        backgroundIndex:
+                          bothSameType || row.type === 'background' ? 0 : 1,
+                      },
+                    )
+                    const comfortLabelText = comfortLabel(comfortScore)
+
                     const cellStyle = bothSameType
                       ? { background: diagonalGradient(row.color, col.color) }
                       : {
@@ -184,6 +219,18 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                         >
                           {ratio.toFixed(1)}
                         </ContrastRatioLabel>
+                        <ComfortLabel
+                          textColor={
+                            !bothSameType
+                              ? getContrastColor(cellStyle.background)
+                              : getContrastColor(col.color)
+                          }
+                          backgroundColor={
+                            !bothSameType ? 'transparent' : col.color
+                          }
+                        >
+                          {comfortLabelText}
+                        </ComfortLabel>
                         <WCAGLevelLabel level={contrastLevel}>
                           {(() => {
                             switch (contrastLevel) {
@@ -206,6 +253,9 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
             </tbody>
           </GridTable>
           <LegendContainer>
+            <InfoLabel size="tiny" as="h3">
+              WCAG 2.2 Contrast Levels
+            </InfoLabel>
             <LegendItem>
               <LegendWCAGLevelLabel level={WCAGContrastLevel.AAA}>
                 AAA
@@ -229,6 +279,35 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                 FAIL
               </LegendWCAGLevelLabel>
               <InfoLabel size="tiny">Does Not Pass</InfoLabel>
+            </LegendItem>
+          </LegendContainer>
+          <LegendContainer>
+            <InfoLabel size="tiny" as="h3">
+              Color Comfort Levels (experimental)
+            </InfoLabel>
+            <LegendItem
+              css={{ flexDirection: 'column', alignItems: 'flex-start' }}
+            >
+              <Label size="tiny">{ColorComfortLabel.Optimal}</Label>
+              <InfoLabel size="tiny">
+                {comfortDescriptions[ColorComfortLabel.Optimal]}
+              </InfoLabel>
+            </LegendItem>
+            <LegendItem
+              css={{ flexDirection: 'column', alignItems: 'flex-start' }}
+            >
+              <Label size="tiny">{ColorComfortLabel.Ok}</Label>
+              <InfoLabel size="tiny">
+                {comfortDescriptions[ColorComfortLabel.Ok]}
+              </InfoLabel>
+            </LegendItem>
+            <LegendItem
+              css={{ flexDirection: 'column', alignItems: 'flex-start' }}
+            >
+              <Label size="tiny">{ColorComfortLabel.Harsh}</Label>
+              <InfoLabel size="tiny">
+                {comfortDescriptions[ColorComfortLabel.Harsh]}
+              </InfoLabel>
             </LegendItem>
           </LegendContainer>
         </>

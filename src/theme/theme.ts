@@ -1,3 +1,4 @@
+import { ColorComfortLabel } from '../colors/color-comfort'
 import { WCAGContrastLevel } from '../colors/types'
 
 const SPACING_UNIT = 8
@@ -32,6 +33,18 @@ const contrastColorFnFactory =
         return colors[2]
       case WCAGContrastLevel.FAIL:
         return colors[3]
+    }
+  }
+
+const comfortColorFnFactory =
+  (colors: string[]) => (label: ColorComfortLabel) => {
+    switch (label) {
+      case ColorComfortLabel.Optimal:
+        return colors[0]
+      case ColorComfortLabel.Ok:
+        return colors[1]
+      case ColorComfortLabel.Harsh:
+        return colors[2]
     }
   }
 
@@ -94,6 +107,7 @@ export type CustomTheme = BaseTheme & {
     disabled: number
   }
   getWCAGLabelColor: (level: WCAGContrastLevel) => string
+  getComfortLabelColor: (label: ColorComfortLabel) => string
 }
 
 const BASE_THEME: BaseTheme = {
@@ -154,6 +168,11 @@ export const LIGHT_THEME: CustomTheme = {
     '#9e6c00',
     '#d73b43',
   ]),
+  getComfortLabelColor: comfortColorFnFactory([
+    '#008578',
+    '#21854b',
+    '#9e6c00',
+  ]),
 }
 
 export const DARK_THEME: CustomTheme = {
@@ -181,5 +200,10 @@ export const DARK_THEME: CustomTheme = {
     '#21854b',
     '#9e6c00',
     '#d73b43',
+  ]),
+  getComfortLabelColor: comfortColorFnFactory([
+    '#008578',
+    '#21854b',
+    '#9e6c00',
   ]),
 }
