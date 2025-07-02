@@ -85,14 +85,28 @@ export function colorComfortScore(
   const hueBg = bg.hcl()[0] // degrees, NaN if gray
   const hueFg = fg.hcl()[0]
 
-  /* ------------------------------------------------------------------ */
-  /* 2. Initialise score and ambient adaptation penalty                 */
-  /* ------------------------------------------------------------------ */
   let score = 100
+
+  // Negative polarity (light text on dark bg) is known to increase fatigue
+  if (fgLum > bgLum) {
+    score -= 10
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 2. Ambient adaptation penalty                                      */
+  /* ------------------------------------------------------------------ */
   const ambient = normaliseAmbient(opts.ambient)
 
   // Non-linear mismatch penalty (exponent > 1 => harsher for big mismatches)
-  const ambientPenalty = 100 * Math.pow(Math.abs(bgLum - ambient), 1.5)
+  // Ambient adaptation penalty:
+  //  Dark mode  → glare from the bright text
+  //  Light mode → glare from the bright background
+  const lumDiff =
+    fgLum > bgLum
+      ? Math.abs(fgLum - ambient) // negative polarity: focus on text
+      : Math.abs(bgLum - ambient) // positive polarity: focus on background
+
+  const ambientPenalty = 80 * Math.pow(lumDiff, 1.3)
   score -= ambientPenalty
 
   /* ------------------------------------------------------------------ */
@@ -166,9 +180,3 @@ export const comfortDescriptions: Record<ColorComfortLabel, string> = {
   [ColorComfortLabel.Harsh]:
     'Visually straining or uncomfortable — avoid for readability or prolonged use.',
 }
-
-/* ------------------------------------------------------------------ */
-/* Example usage                                                      */
-/* ------------------------------------------------------------------ */
-// const score = colorComfortScore('#FFFFFF', '#000000', { ambient: 'dark' });
-// console.log(score, comfortLabel(score));  // e.g. 30  'harsh'
