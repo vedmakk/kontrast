@@ -2,10 +2,10 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { CSSObject } from '@emotion/react'
 
-interface LabelProps {
+interface LabelProps<T extends React.ElementType> {
   children: React.ReactNode
   size?: 'large' | 'normal' | 'small' | 'tiny'
-  as?: React.ElementType
+  as?: T
   className?: string
 }
 
@@ -37,13 +37,18 @@ const StyledLabel = styled.span<{
   }
 })
 
-export const Label: React.FC<LabelProps> = ({
+export const Label = <T extends React.ElementType = 'span'>({
   children,
   size = 'normal',
-  as = 'span',
+  as,
   className,
-}) => (
-  <StyledLabel size={size} as={as} className={className}>
-    {children}
-  </StyledLabel>
-)
+  ...props
+}: LabelProps<T> &
+  Omit<React.ComponentPropsWithoutRef<T>, keyof LabelProps<T>>) => {
+  const Component = as || 'span'
+  return (
+    <StyledLabel as={Component} size={size} className={className} {...props}>
+      {children}
+    </StyledLabel>
+  )
+}

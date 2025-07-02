@@ -12,7 +12,7 @@ export type AmbientLevel =
   | number // explicit 0–1 numeric
 
 /** Internal constants */
-const DEFAULT_AMBIENT = 0.75 // “normal office / indoor daylight”
+export const DEFAULT_AMBIENT = 0.75 // “normal office / indoor daylight”
 const CONTRAST_MIN = 4.5 // WCAG AA for body text
 const MAX_VIBRANCY_PENALTY = 20
 const MAX_HARMONY_PENALTY = 20

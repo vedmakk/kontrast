@@ -9,13 +9,17 @@ import {
   colorComfortScore,
   comfortDescriptions,
   comfortLabel,
+  AmbientLevel,
 } from '../color-comfort'
 
 import { InfoLabel } from '../../app/components/InfoLabel'
 import { Label } from '../../app/components/Label'
+import { Appear } from '../../app/components/Appear'
 
 interface Props {
   readonly colors: readonly Color[]
+  readonly isColorComfortEnabled: boolean
+  readonly ambientLevel: AmbientLevel
 }
 
 const CELL_SIZE = '100px'
@@ -122,7 +126,11 @@ const LegendWCAGLevelLabel = styled(WCAGLevelLabel)({
   right: 'auto',
 })
 
-export const ColorGrid: React.FC<Props> = ({ colors }) => {
+export const ColorGrid: React.FC<Props> = ({
+  colors,
+  isColorComfortEnabled,
+  ambientLevel,
+}) => {
   const diagonalGradient = (c1: string, c2: string) =>
     `linear-gradient(135deg, ${c1} 50%, ${c2} 50%)`
 
@@ -178,6 +186,7 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                       row.color,
                       col.color,
                       {
+                        ambient: ambientLevel,
                         backgroundIndex:
                           bothSameType || row.type === 'background' ? 0 : 1,
                       },
@@ -219,18 +228,22 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
                         >
                           {ratio.toFixed(1)}
                         </ContrastRatioLabel>
-                        <ComfortLabel
-                          textColor={
-                            !bothSameType
-                              ? getContrastColor(cellStyle.background)
-                              : getContrastColor(col.color)
-                          }
-                          backgroundColor={
-                            !bothSameType ? 'transparent' : col.color
-                          }
-                        >
-                          {comfortLabelText}
-                        </ComfortLabel>
+                        {isColorComfortEnabled && (
+                          <Appear>
+                            <ComfortLabel
+                              textColor={
+                                !bothSameType
+                                  ? getContrastColor(cellStyle.background)
+                                  : getContrastColor(col.color)
+                              }
+                              backgroundColor={
+                                !bothSameType ? 'transparent' : col.color
+                              }
+                            >
+                              {comfortLabelText}
+                            </ComfortLabel>
+                          </Appear>
+                        )}
                         <WCAGLevelLabel level={contrastLevel}>
                           {(() => {
                             switch (contrastLevel) {
@@ -281,35 +294,39 @@ export const ColorGrid: React.FC<Props> = ({ colors }) => {
               <InfoLabel size="tiny">Does Not Pass</InfoLabel>
             </LegendItem>
           </LegendContainer>
-          <LegendContainer>
-            <InfoLabel size="tiny" as="h3">
-              Color Comfort Levels (experimental)
-            </InfoLabel>
-            <LegendItem
-              css={{ flexDirection: 'column', alignItems: 'flex-start' }}
-            >
-              <Label size="tiny">{ColorComfortLabel.Optimal}</Label>
-              <InfoLabel size="tiny">
-                {comfortDescriptions[ColorComfortLabel.Optimal]}
-              </InfoLabel>
-            </LegendItem>
-            <LegendItem
-              css={{ flexDirection: 'column', alignItems: 'flex-start' }}
-            >
-              <Label size="tiny">{ColorComfortLabel.Ok}</Label>
-              <InfoLabel size="tiny">
-                {comfortDescriptions[ColorComfortLabel.Ok]}
-              </InfoLabel>
-            </LegendItem>
-            <LegendItem
-              css={{ flexDirection: 'column', alignItems: 'flex-start' }}
-            >
-              <Label size="tiny">{ColorComfortLabel.Harsh}</Label>
-              <InfoLabel size="tiny">
-                {comfortDescriptions[ColorComfortLabel.Harsh]}
-              </InfoLabel>
-            </LegendItem>
-          </LegendContainer>
+          {isColorComfortEnabled && (
+            <Appear>
+              <LegendContainer>
+                <InfoLabel size="tiny" as="h3">
+                  Color Comfort Levels (experimental)
+                </InfoLabel>
+                <LegendItem
+                  css={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <Label size="tiny">{ColorComfortLabel.Optimal}</Label>
+                  <InfoLabel size="tiny">
+                    {comfortDescriptions[ColorComfortLabel.Optimal]}
+                  </InfoLabel>
+                </LegendItem>
+                <LegendItem
+                  css={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <Label size="tiny">{ColorComfortLabel.Ok}</Label>
+                  <InfoLabel size="tiny">
+                    {comfortDescriptions[ColorComfortLabel.Ok]}
+                  </InfoLabel>
+                </LegendItem>
+                <LegendItem
+                  css={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <Label size="tiny">{ColorComfortLabel.Harsh}</Label>
+                  <InfoLabel size="tiny">
+                    {comfortDescriptions[ColorComfortLabel.Harsh]}
+                  </InfoLabel>
+                </LegendItem>
+              </LegendContainer>
+            </Appear>
+          )}
         </>
       )}
     </Container>

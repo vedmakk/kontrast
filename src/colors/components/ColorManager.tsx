@@ -8,6 +8,7 @@ import { Color, ColorType } from '../types'
 import { Button } from '../../app/components/Button'
 import { InfoLabel } from '../../app/components/InfoLabel'
 import { ColorInput } from './ColorInput'
+import { Select } from '../../app/components/Select'
 
 interface Props {
   readonly colors: readonly Color[]
@@ -51,20 +52,6 @@ const HexInput = styled.input(
       outlineOffset: '0px',
     },
   },
-)
-
-const Select = styled.select(
-  ({ theme }) => ({
-    fontFamily: 'Fira Code, monospace',
-    fontSize: theme.fontSize.small,
-    padding: `${theme.spacing(1)} ${theme.spacing(1)}`,
-    border: `1px solid ${theme.colors.link}`,
-    borderRadius: theme.spacing(0.5),
-    color: theme.colors.text,
-    background: theme.colors.background,
-    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
-  }),
-  focusVisibleStyles,
 )
 
 export const ColorManager: React.FC<Props> = ({
