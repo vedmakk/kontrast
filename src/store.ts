@@ -3,19 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { themeReducer } from './theme/themeSlice'
 import { colorsReducer } from './colors/colorsSlice'
-import { parseColorsFromParam } from './colors/utils'
-
-const getPreloadedState = () => {
-  if (typeof window === 'undefined') return undefined
-  try {
-    const params = new URLSearchParams(window.location.search)
-    const paramValue = params.get('colors')
-    const colors = parseColorsFromParam(paramValue)
-    return colors ? { colors } : undefined
-  } catch {
-    return undefined
-  }
-}
 
 export const createStore = () =>
   configureStore({
@@ -23,7 +10,6 @@ export const createStore = () =>
       theme: themeReducer,
       colors: colorsReducer,
     },
-    preloadedState: getPreloadedState(),
   })
 
 export const store = createStore()

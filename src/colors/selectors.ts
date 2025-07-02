@@ -3,7 +3,7 @@ import chroma from 'chroma-js'
 
 import { RootState } from '../store'
 
-export const selectColors = (state: RootState) => state.colors
+export const selectColors = (state: RootState) => state.colors.colors
 
 export const selectValidColors = createSelector(selectColors, (colors) =>
   colors.map((c) => ({
@@ -11,3 +11,5 @@ export const selectValidColors = createSelector(selectColors, (colors) =>
     color: chroma.valid(c.color) ? c.color : '#000000', // While typing, the color may temporarily be invalid
   })),
 )
+
+export const selectColorComfort = (state: RootState) => state.colors.comfort

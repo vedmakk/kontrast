@@ -7,11 +7,17 @@ import { useAppSelector } from '../store'
 
 import { encodeColorsToParam } from './utils'
 
-import { selectColors, selectValidColors } from './selectors'
+import {
+  selectColorComfort,
+  selectColors,
+  selectValidColors,
+} from './selectors'
 
 export const useColors = () => useAppSelector(selectColors)
 
 export const useValidColors = () => useAppSelector(selectValidColors)
+
+export const useColorComfort = () => useAppSelector(selectColorComfort)
 
 export const useSyncColorsToUrl = () => {
   const colors = useColors()

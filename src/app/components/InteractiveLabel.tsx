@@ -22,9 +22,7 @@ export const InteractiveLabel: React.FC<Props> = ({
 }) => (
   <Appear>
     <StyledInteractiveLabel htmlFor={htmlFor} onClick={onClick}>
-      <StyledLabel id="label" active={active}>
-        {label}
-      </StyledLabel>
+      <StyledLabel active={active}>{label}</StyledLabel>
     </StyledInteractiveLabel>
   </Appear>
 )

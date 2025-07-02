@@ -5,6 +5,7 @@ import { ThemeSwitch } from '../../theme/containers/ThemeSwitch'
 
 import { ColorManager } from '../../colors/containers/ColorManager'
 import { ColorGrid } from '../../colors/containers/ColorGrid'
+import { ColorComfortSettings } from '../../colors/containers/ColorComfortSettings'
 import { Label } from './Label'
 import { InfoLabel } from './InfoLabel'
 import { Button } from './Button'
@@ -85,6 +86,7 @@ export const App: React.FC = () => (
           </Label>
         </SidebarSection>
         <ColorManager />
+        <ColorComfortSettings />
         <MobileGridContainer>
           <ColorGrid />
         </MobileGridContainer>

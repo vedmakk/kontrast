@@ -49,6 +49,9 @@ Use sliders, hex inputs, or color pickers — changes are reflected immediately.
 🔢 **Contrast Ratios**  
 See the exact contrast ratio for each comparison.
 
+🎨 **Color Comfort Scores (Experimental 🧪)**  
+Get a sense of how comfortable a color combination is beyond WCAG contrast by factoring in ambient light, color harmony, and visual strain. Helps detect harsh or fatiguing combinations that pass contrast checks but may still feel uncomfortable.
+
 💡 **Smart Suggestions** _(coming soon)_  
 Get nearby color suggestions that pass contrast while staying visually close.
 
