@@ -24,11 +24,8 @@ const ColorInputLabel = styled.label<{
 }))
 
 const HiddenNativeInput = styled.input({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: 0,
-  height: 0,
+  width: '2.25rem',
+  height: '2.25rem',
   opacity: 0,
   cursor: 'pointer',
   border: 'none',
@@ -54,7 +51,6 @@ export const ColorInput: React.FC<Props> = ({ value, ...props }) => {
       <HiddenNativeInput
         ref={inputRef}
         type="color"
-        aria-label="Pick color"
         value={value}
         onFocus={handleFocus}
         onBlur={handleBlur}

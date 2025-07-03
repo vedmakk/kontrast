@@ -67,7 +67,6 @@ export const ColorManager: React.FC<Props> = ({
     {colors.map((c) => (
       <Row key={c.id}>
         <ColorInput
-          type="color"
           aria-label="Pick color"
           value={c.color}
           onChange={(e) => onUpdate(c.id, { color: e.target.value })}
