@@ -70,6 +70,10 @@ describe('Colour harmony / vibrating complements', () => {
       ColorComfortLabel.Harsh,
     )
   })
+
+  it('highly saturated, near-complementary hues with acceptable contrast score HARSH', () => {
+    expect(label('#00008b', '#ff8c00', 'bright')).toBe(ColorComfortLabel.Harsh)
+  })
 })
 
 /* -------------------------------------------------------------------------- */
