@@ -44,7 +44,7 @@ const HexInput = styled.input(
     width: '6rem',
     color: theme.colors.text,
     background: theme.colors.background,
-    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}`,
+    transition: `background-color ${theme.animations.transition}, border ${theme.animations.transition}, color ${theme.animations.transition}`,
   }),
   focusVisibleStyles,
   {
