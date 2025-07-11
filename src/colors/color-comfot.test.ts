@@ -10,7 +10,7 @@ import {
  * Helpers
  */
 function label(c1: string, c2: string, ambient?: any) {
-  return comfortLabel(colorComfortScore(c1, c2, { ambient }))
+  return comfortLabel(colorComfortScore(c1, c2, { ambient }).score)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -92,10 +92,10 @@ describe('Negative-polarity baseline penalty', () => {
   it('light-gray on dark bg is lower than dark-gray on light bg', () => {
     const neg = colorComfortScore('#000', '#c8c8c8', {
       ambient: DEFAULT_AMBIENT,
-    }) // negative polarity
+    }).score // negative polarity
     const pos = colorComfortScore('#ffffff', '#404040', {
       ambient: DEFAULT_AMBIENT,
-    }) // positive polarity
+    }).score // positive polarity
 
     expect(neg).toBeLessThan(pos)
   })

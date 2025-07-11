@@ -14,13 +14,14 @@ import {
   autoUpdate,
   FloatingPortal,
   FloatingArrow,
+  safePolygon,
 } from '@floating-ui/react'
 import { useTheme } from '@emotion/react'
 
 import { Label } from './Label'
 
 interface Props {
-  label: string
+  label: string | React.ReactNode
   children: React.ReactNode
 }
 
@@ -55,7 +56,7 @@ const Tooltip: React.FC<Props> = ({ label, children }) => {
     // Make sure the tooltip stays on the screen
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(16),
+      offset(12),
       flip(),
       shift(),
       arrow({
@@ -65,9 +66,13 @@ const Tooltip: React.FC<Props> = ({ label, children }) => {
   })
 
   // Event listeners to change the open state
-  const hover = useHover(context, { move: false })
+  const hover = useHover(context, {
+    move: true,
+    delay: { open: 150 },
+    handleClose: safePolygon(),
+  })
   const focus = useFocus(context)
-  const dismiss = useDismiss(context)
+  const dismiss = useDismiss(context, { referencePress: true })
 
   // Role props for screen readers
   const role = useRole(context, { role: 'tooltip' })
@@ -108,7 +113,11 @@ const Tooltip: React.FC<Props> = ({ label, children }) => {
               }}
             />
             <TooltipContainer>
-              <Label size="tiny">{label}</Label>
+              {typeof label === 'string' ? (
+                <Label size="tiny">{label}</Label>
+              ) : (
+                label
+              )}
             </TooltipContainer>
           </div>
         )}
