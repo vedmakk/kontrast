@@ -16,6 +16,7 @@ import {
 import { InfoLabel } from '../../app/components/InfoLabel'
 import { Label } from '../../app/components/Label'
 import { Appear } from '../../app/components/Appear'
+import { ColorComfortBreakdown } from './ColorComfortBreakdown'
 
 interface Props {
   readonly colors: readonly Color[]
@@ -85,6 +86,12 @@ const WCAGLevelLabel = styled.span<{
   transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
 }))
 
+const ComfortLabelWrapper = styled.div(({ theme }) => ({
+  position: 'absolute',
+  bottom: theme.spacing(0.5),
+  right: theme.spacing(0.5),
+}))
+
 const ComfortLabel = styled.span<{
   textColor: string
   backgroundColor: string
@@ -94,9 +101,8 @@ const ComfortLabel = styled.span<{
   fontSize: theme.fontSize.tiny,
   padding: theme.spacing(0.25),
   borderRadius: theme.spacing(0.5),
-  position: 'absolute',
-  bottom: theme.spacing(0.5),
-  right: theme.spacing(0.5),
+  textAlign: 'right',
+  minWidth: '30px',
   transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
 }))
 
@@ -233,18 +239,22 @@ export const ColorGrid: React.FC<Props> = ({
                         </ContrastRatioLabel>
                         {isColorComfortEnabled && (
                           <Appear>
-                            <ComfortLabel
-                              textColor={
-                                !bothSameType
-                                  ? getContrastColor(cellStyle.background)
-                                  : getContrastColor(col.color)
-                              }
-                              backgroundColor={
-                                !bothSameType ? 'transparent' : col.color
-                              }
-                            >
-                              {comfortLabelText}
-                            </ComfortLabel>
+                            <ComfortLabelWrapper>
+                              <ColorComfortBreakdown result={comfortResult}>
+                                <ComfortLabel
+                                  textColor={
+                                    !bothSameType
+                                      ? getContrastColor(cellStyle.background)
+                                      : getContrastColor(col.color)
+                                  }
+                                  backgroundColor={
+                                    !bothSameType ? 'transparent' : col.color
+                                  }
+                                >
+                                  {comfortLabelText}
+                                </ComfortLabel>
+                              </ColorComfortBreakdown>
+                            </ComfortLabelWrapper>
                           </Appear>
                         )}
                         <WCAGLevelLabel
@@ -321,7 +331,9 @@ export const ColorGrid: React.FC<Props> = ({
                 <LegendItem
                   css={{ flexDirection: 'column', alignItems: 'flex-start' }}
                 >
-                  <Label size="tiny">{ColorComfortLabel.Optimal}</Label>
+                  <Label size="tiny">
+                    {ColorComfortLabel.Optimal} (80–100)
+                  </Label>
                   <InfoLabel size="tiny">
                     {comfortDescriptions[ColorComfortLabel.Optimal]}
                   </InfoLabel>
@@ -329,7 +341,7 @@ export const ColorGrid: React.FC<Props> = ({
                 <LegendItem
                   css={{ flexDirection: 'column', alignItems: 'flex-start' }}
                 >
-                  <Label size="tiny">{ColorComfortLabel.Ok}</Label>
+                  <Label size="tiny">{ColorComfortLabel.Ok} (60–79)</Label>
                   <InfoLabel size="tiny">
                     {comfortDescriptions[ColorComfortLabel.Ok]}
                   </InfoLabel>
@@ -337,7 +349,7 @@ export const ColorGrid: React.FC<Props> = ({
                 <LegendItem
                   css={{ flexDirection: 'column', alignItems: 'flex-start' }}
                 >
-                  <Label size="tiny">{ColorComfortLabel.Harsh}</Label>
+                  <Label size="tiny">{ColorComfortLabel.Harsh} (0–59)</Label>
                   <InfoLabel size="tiny">
                     {comfortDescriptions[ColorComfortLabel.Harsh]}
                   </InfoLabel>

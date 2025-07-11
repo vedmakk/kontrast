@@ -170,8 +170,8 @@ export const LIGHT_THEME: CustomTheme = {
   ]),
   getComfortLabelColor: comfortColorFnFactory([
     '#008578',
-    '#21854b',
     '#9e6c00',
+    '#d73b43',
   ]),
 }
 
@@ -203,7 +203,7 @@ export const DARK_THEME: CustomTheme = {
   ]),
   getComfortLabelColor: comfortColorFnFactory([
     '#008578',
-    '#21854b',
     '#9e6c00',
+    '#d73b43',
   ]),
 }
