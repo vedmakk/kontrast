@@ -58,6 +58,21 @@ export interface ComfortOptions {
   backgroundIndex?: 0 | 1 // which colour is the background (default 0)
 }
 
+// Define a richer return type (score + per-factor breakdown)
+export interface ComfortScoreBreakdown {
+  negativePolarity: number
+  ambientAdaptation: number
+  readability: number
+  harmony: number
+  vibrancy: number
+  blueLight: number
+}
+
+export interface ComfortScoreResult {
+  score: number
+  reasons: ComfortScoreBreakdown
+}
+
 /**
  * Compute the Color Comfort Score (0-100).
  * @param c1  Hex, rgb(), hsl()… – any chroma.js-parsable colour (background by default)
@@ -68,10 +83,20 @@ export function colorComfortScore(
   c1: string,
   c2: string,
   opts: ComfortOptions = {},
-): number {
+): ComfortScoreResult {
   const bgFirst = opts.backgroundIndex !== 1 // default: first arg is background
   const bg = bgFirst ? chroma(c1) : chroma(c2)
   const fg = bgFirst ? chroma(c2) : chroma(c1)
+
+  // Track individual penalties for transparency
+  const reasons: ComfortScoreBreakdown = {
+    negativePolarity: 0,
+    ambientAdaptation: 0,
+    readability: 0,
+    harmony: 0,
+    vibrancy: 0,
+    blueLight: 0,
+  }
 
   /* ------------------------------------------------------------------ */
   /* 1. Gather perceptual data                                          */
@@ -89,7 +114,8 @@ export function colorComfortScore(
 
   // Negative polarity (light text on dark bg) is known to increase fatigue
   if (fgLum > bgLum) {
-    score -= 10
+    reasons.negativePolarity = -10
+    score += reasons.negativePolarity
   }
 
   /* ------------------------------------------------------------------ */
@@ -107,14 +133,17 @@ export function colorComfortScore(
       : Math.abs(bgLum - ambient) // positive polarity: focus on background
 
   const ambientPenalty = 80 * Math.pow(lumDiff, 1.3)
-  score -= ambientPenalty
+  reasons.ambientAdaptation = -ambientPenalty
+  score += reasons.ambientAdaptation
 
   /* ------------------------------------------------------------------ */
   /* 3. Readability penalty if contrast < WCAG AA                       */
   /* ------------------------------------------------------------------ */
   const cr = contrastRatio(bgLum, fgLum)
   if (cr < CONTRAST_MIN) {
-    score -= ((CONTRAST_MIN - cr) / LOW_CONTRAST_SPAN) * 70 // ≤70-point hit
+    const readabilityPenalty = ((CONTRAST_MIN - cr) / LOW_CONTRAST_SPAN) * 70 // ≤70-point hit
+    reasons.readability = -readabilityPenalty
+    score += reasons.readability
   }
 
   /* ------------------------------------------------------------------ */
@@ -124,7 +153,9 @@ export function colorComfortScore(
     // both reasonably vivid
     const hDiff = hueDiff(hueBg, hueFg) / 180 // 0-1
     const cDiff = Math.abs(Cbg - Cfg) / (Cbg + Cfg) // 0-1
-    score -= (0.7 * hDiff + 0.3 * cDiff) * MAX_HARMONY_PENALTY
+    const harmonyPenalty = (0.7 * hDiff + 0.3 * cDiff) * MAX_HARMONY_PENALTY
+    reasons.harmony = -harmonyPenalty
+    score += reasons.harmony
   }
 
   /* ------------------------------------------------------------------ */
@@ -132,7 +163,9 @@ export function colorComfortScore(
   /* ------------------------------------------------------------------ */
   const hueDistance = hueDiff(hueBg, hueFg)
   if (Cbg > 50 && Cfg > 50 && hueDistance > 150 && Math.abs(Lbg - Lfg) < 50) {
-    score -= (hueDistance / 180) * MAX_VIBRANCY_PENALTY
+    const vibrancyPenalty = (hueDistance / 180) * MAX_VIBRANCY_PENALTY
+    reasons.vibrancy = -vibrancyPenalty
+    score += reasons.vibrancy
   }
 
   /* ------------------------------------------------------------------ */
@@ -147,14 +180,17 @@ export function colorComfortScore(
       fgHue >= BLUE_HUE_START &&
       fgHue <= BLUE_HUE_END
     ) {
-      score -= 5 // small nudge
+      reasons.blueLight = -5
+      score += reasons.blueLight // small nudge
     }
   }
 
   /* ------------------------------------------------------------------ */
   /* 7. Clamp and return                                                */
   /* ------------------------------------------------------------------ */
-  return Math.round(Math.max(0, Math.min(100, score)))
+  const finalScore = Math.round(Math.max(0, Math.min(100, score)))
+
+  return { score: finalScore, reasons }
 }
 
 export enum ColorComfortLabel {

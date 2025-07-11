@@ -10,6 +10,7 @@ import {
   comfortDescriptions,
   comfortLabel,
   AmbientLevel,
+  ComfortScoreResult,
 } from '../color-comfort'
 
 import { InfoLabel } from '../../app/components/InfoLabel'
@@ -69,19 +70,20 @@ const ContrastRatioLabel = styled.span<{ textColor: string }>(
   }),
 )
 
-const WCAGLevelLabel = styled.span<{ level: WCAGContrastLevel }>(
-  ({ theme, level }) => ({
-    color: theme.colors.text,
-    background: theme.getWCAGLabelColor(level),
-    fontSize: theme.fontSize.tiny,
-    padding: theme.spacing(0.25),
-    borderRadius: theme.spacing(0.5),
-    position: 'absolute',
-    bottom: theme.spacing(0.5),
-    right: theme.spacing(0.5),
-    transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
-  }),
-)
+const WCAGLevelLabel = styled.span<{
+  level: WCAGContrastLevel
+  colorComfortEnabled: boolean
+}>(({ theme, level, colorComfortEnabled }) => ({
+  color: theme.colors.text,
+  background: theme.getWCAGLabelColor(level),
+  fontSize: theme.fontSize.tiny,
+  padding: theme.spacing(0.25),
+  borderRadius: theme.spacing(0.5),
+  position: 'absolute',
+  [colorComfortEnabled ? 'top' : 'bottom']: theme.spacing(0.5),
+  right: theme.spacing(0.5),
+  transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
+}))
 
 const ComfortLabel = styled.span<{
   textColor: string
@@ -94,7 +96,7 @@ const ComfortLabel = styled.span<{
   borderRadius: theme.spacing(0.5),
   position: 'absolute',
   bottom: theme.spacing(0.5),
-  left: theme.spacing(0.5),
+  right: theme.spacing(0.5),
   transition: `background-color ${theme.animations.transition}, color ${theme.animations.transition}`,
 }))
 
@@ -182,7 +184,7 @@ export const ColorGrid: React.FC<Props> = ({
 
                     const ratio = contrastRatioFor(row.color, col.color)
                     const contrastLevel = getContrastLevel(ratio)
-                    const comfortScore = colorComfortScore(
+                    const comfortResult: ComfortScoreResult = colorComfortScore(
                       row.color,
                       col.color,
                       {
@@ -191,6 +193,7 @@ export const ColorGrid: React.FC<Props> = ({
                           bothSameType || row.type === 'background' ? 0 : 1,
                       },
                     )
+                    const comfortScore = comfortResult.score
                     const comfortLabelText = comfortLabel(comfortScore)
 
                     const cellStyle = bothSameType
@@ -244,7 +247,10 @@ export const ColorGrid: React.FC<Props> = ({
                             </ComfortLabel>
                           </Appear>
                         )}
-                        <WCAGLevelLabel level={contrastLevel}>
+                        <WCAGLevelLabel
+                          level={contrastLevel}
+                          colorComfortEnabled={isColorComfortEnabled}
+                        >
                           {(() => {
                             switch (contrastLevel) {
                               case WCAGContrastLevel.AAA:
@@ -270,25 +276,37 @@ export const ColorGrid: React.FC<Props> = ({
               WCAG 2.2 Contrast Levels
             </InfoLabel>
             <LegendItem>
-              <LegendWCAGLevelLabel level={WCAGContrastLevel.AAA}>
+              <LegendWCAGLevelLabel
+                level={WCAGContrastLevel.AAA}
+                colorComfortEnabled={isColorComfortEnabled}
+              >
                 AAA
               </LegendWCAGLevelLabel>
               <InfoLabel size="tiny">Pass AAA (7:1)</InfoLabel>
             </LegendItem>
             <LegendItem>
-              <LegendWCAGLevelLabel level={WCAGContrastLevel.AA}>
+              <LegendWCAGLevelLabel
+                level={WCAGContrastLevel.AA}
+                colorComfortEnabled={isColorComfortEnabled}
+              >
                 AA
               </LegendWCAGLevelLabel>
               <InfoLabel size="tiny">Pass AA (4.5:1)</InfoLabel>
             </LegendItem>
             <LegendItem>
-              <LegendWCAGLevelLabel level={WCAGContrastLevel.AA18}>
+              <LegendWCAGLevelLabel
+                level={WCAGContrastLevel.AA18}
+                colorComfortEnabled={isColorComfortEnabled}
+              >
                 AA18
               </LegendWCAGLevelLabel>
               <InfoLabel size="tiny">Pass AA, Large Text Only (3:1)</InfoLabel>
             </LegendItem>
             <LegendItem>
-              <LegendWCAGLevelLabel level={WCAGContrastLevel.FAIL}>
+              <LegendWCAGLevelLabel
+                level={WCAGContrastLevel.FAIL}
+                colorComfortEnabled={isColorComfortEnabled}
+              >
                 FAIL
               </LegendWCAGLevelLabel>
               <InfoLabel size="tiny">Does Not Pass</InfoLabel>
