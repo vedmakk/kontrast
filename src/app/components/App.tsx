@@ -100,6 +100,11 @@ export const App: React.FC = () => (
             externalLink
           />
           <Button
+            href="https://medium.com/@jan.mittelman/beyond-wcag-a-color-comfort-score-to-catch-eye-straining-combos-dcf75159c9ff"
+            label="Color Comfort Score"
+            externalLink
+          />
+          <Button
             href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum"
             label="WCAG 2.2 Contrast"
             externalLink
