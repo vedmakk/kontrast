@@ -47,7 +47,7 @@ const getInitialColors = (): Color[] => {
 const initialState: ColorState = {
   colors: getInitialColors(),
   comfort: {
-    isEnabled: false,
+    isEnabled: true,
     ambientLevel: DEFAULT_AMBIENT,
   },
 }
