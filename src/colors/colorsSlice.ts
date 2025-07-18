@@ -27,8 +27,8 @@ const newColor = (): Color => ({
 
 const defaultColors: Color[] = [
   { id: nanoid(), color: '#f8f8f8', type: 'background' },
-  { id: nanoid(), color: '#f5f0ff', type: 'background' },
-  { id: nanoid(), color: '#000000', type: 'foreground' },
+  { id: nanoid(), color: '#f2efff', type: 'background' },
+  { id: nanoid(), color: '#373737', type: 'foreground' },
   { id: nanoid(), color: '#7f42ff', type: 'foreground' },
 ]
 
