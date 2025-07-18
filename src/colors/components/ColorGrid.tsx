@@ -75,7 +75,7 @@ const WCAGLevelLabel = styled.span<{
   level: WCAGContrastLevel
   colorComfortEnabled: boolean
 }>(({ theme, level, colorComfortEnabled }) => ({
-  color: theme.colors.text,
+  color: theme.colors.label,
   background: theme.getWCAGLabelColor(level),
   fontSize: theme.fontSize.tiny,
   padding: theme.spacing(0.25),

@@ -95,6 +95,7 @@ export type CustomTheme = BaseTheme & {
     title: string
     text: string
     link: string
+    label: string
     backdrop: string
     paper: string
     background: string
@@ -151,6 +152,7 @@ export const LIGHT_THEME: CustomTheme = {
     title: '#222222',
     text: '#373737',
     link: '#373737',
+    label: '#000000',
     backdrop: 'rgba(0, 0, 0, 0.075)',
     paper: '#f2efff',
     background: '#f8f8f8',
@@ -184,6 +186,7 @@ export const DARK_THEME: CustomTheme = {
     title: '#c7c7c7',
     text: '#bababa',
     link: '#bababa',
+    label: '#ffffff',
     backdrop: 'rgba(255, 255, 255, 0.1)',
     paper: '#110c1d',
     background: '#222222',
